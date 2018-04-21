@@ -1,10 +1,12 @@
 import React from 'react';
 import { Container, Nav, NavItem, NavLink } from 'reactstrap';
+import SiteTitle from './SiteTitle';
 
 const Sidebar = () => (
   <div className="sidebar">
     <Container>
-      <Nav vertical>
+      <SiteTitle />
+      <Nav pills vertical>
         <NavItem>
           <NavLink href="#">Link</NavLink>
         </NavItem>
@@ -13,11 +15,6 @@ const Sidebar = () => (
         </NavItem>
         <NavItem>
           <NavLink href="#">Another Link</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink disabled href="#">
-            Disabled Link
-          </NavLink>
         </NavItem>
       </Nav>
     </Container>

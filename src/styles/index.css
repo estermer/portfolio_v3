@@ -5,16 +5,28 @@ body {
 }
 
 .container {
-  margin-bottom: 1rem;
-  margin-top: 1rem;
+  padding-top: 2rem;
 }
 
 /* Sidebar */
 .sidebar {
-  background-color: gray;
+  background-color: #34495e;
   height: 100vh;
   text-align: center;
   width: 100vw;
+}
+
+.avatar {
+  border: 1px solid #ecf0f1;
+  border-radius: 100%;
+  display: block;
+  height: 120px;
+  margin: auto;
+  margin-bottom: 1rem;
+}
+
+.site-title {
+  text-align: center;
 }
 /* Sidebar */
 
@@ -33,13 +45,13 @@ body {
     position: fixed;
     text-align: left;
     top: 0;
-    width: 18rem;
+    width: 20rem;
   }
   /* Sidebar */
 
   /* Content Container */
   .content {
-    margin-left: 18rem;
+    margin-left: 20rem;
   }
   /* Content Container */
 }
