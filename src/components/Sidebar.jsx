@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Nav } from 'reactstrap';
-import SiteTitle from './SiteTitle';
 import NavButton from './NavButton';
+import SiteTitle from './SiteTitle';
+import SocialIcons from './SocialIcons';
 
 const Sidebar = ({ onClickNavItem, activeNavItem }) => (
   <div className="sidebar">
     <Container>
       <SiteTitle />
+      <SocialIcons />
       <hr />
       <Nav vertical>
         <NavButton activeNavItem={activeNavItem} name="About Me" onClick={onClickNavItem} />

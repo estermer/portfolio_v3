@@ -27,6 +27,17 @@ body {
   margin-bottom: 1rem;
 }
 
+.social-icons {
+  display: flex;
+  justify-content: center;
+}
+
+.social-icons a {
+  color: inherit;
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
 .site-title {
   text-align: center;
 }
