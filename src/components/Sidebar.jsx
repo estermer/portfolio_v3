@@ -1,24 +1,26 @@
 import React from 'react';
-import { Container, Nav, NavItem, NavLink } from 'reactstrap';
+import PropTypes from 'prop-types';
+import { Container, Nav } from 'reactstrap';
 import SiteTitle from './SiteTitle';
+import NavButton from './NavButton';
 
-const Sidebar = () => (
+const Sidebar = ({ onClickNavItem, activeNavItem }) => (
   <div className="sidebar">
     <Container>
       <SiteTitle />
-      <Nav pills vertical>
-        <NavItem>
-          <NavLink href="#">Link</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="#">Link</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="#">Another Link</NavLink>
-        </NavItem>
+      <Nav vertical>
+        <NavButton activeNavItem={activeNavItem} name="About Me" onClick={onClickNavItem} />
+        <NavButton activeNavItem={activeNavItem} name="Experience" onClick={onClickNavItem} />
+        <NavButton activeNavItem={activeNavItem} name="Projects" onClick={onClickNavItem} />
+        <NavButton activeNavItem={activeNavItem} name="Recommendations" onClick={onClickNavItem} />
       </Nav>
     </Container>
   </div>
 );
+
+Sidebar.propTypes = {
+  activeNavItem: PropTypes.string.isRequired,
+  onClickNavItem: PropTypes.func.isRequired,
+};
 
 export default Sidebar;

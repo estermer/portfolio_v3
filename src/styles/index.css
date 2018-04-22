@@ -10,7 +10,7 @@ body {
 
 /* Sidebar */
 .sidebar {
-  background-color: #34495e;
+  background-color: #2980b9;
   height: 100vh;
   text-align: center;
   width: 100vw;
@@ -21,12 +21,21 @@ body {
   border-radius: 100%;
   display: block;
   height: 120px;
+  width: 120px;
   margin: auto;
   margin-bottom: 1rem;
 }
 
 .site-title {
   text-align: center;
+}
+
+.nav-item {
+  margin: 1rem;
+}
+
+.nav-item:hover {
+  cursor: pointer;
 }
 /* Sidebar */
 
