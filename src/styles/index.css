@@ -5,13 +5,14 @@ body {
 }
 
 .container {
+  padding-bottom: 2rem;
   padding-top: 2rem;
 }
 
 /* Sidebar */
 .sidebar {
   background-color: #2980b9;
-  height: 100vh;
+  color: #ecf0f1;
   text-align: center;
   width: 100vw;
 }
@@ -30,12 +31,26 @@ body {
   text-align: center;
 }
 
-.nav-item {
-  margin: 1rem;
+.active {
+  background-color: #76cdff;
 }
 
-.nav-item:hover {
+.active:hover {
   cursor: pointer;
+}
+
+.inactive:hover {
+  background-color: #439ad3;
+  cursor: pointer;
+}
+
+.nav-item {
+  padding: 1rem 2rem 1rem 2rem;
+  transition: background-color 0.5s ease;
+}
+
+.nav-item > i {
+  display: none;
 }
 /* Sidebar */
 
@@ -50,11 +65,19 @@ body {
   /* Sidebar */
   .sidebar {
     bottom: 0;
+    height: 100vh;
     left: 0;
+    overflow-y: auto;
     position: fixed;
     text-align: left;
     top: 0;
     width: 20rem;
+  }
+
+  .nav-item > i {
+    display: inline-block;
+    font-size: 1.25rem;
+    width: 50px;
   }
   /* Sidebar */
 

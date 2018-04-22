@@ -24,8 +24,13 @@ export default class NavButton extends React.Component {
 
   render() {
     const { activeNavItem, name } = this.props;
+    const isActive = activeNavItem === name;
     return (
-      <NavItem active={activeNavItem === name} onClick={this.onClick}>
+      <NavItem
+        active={isActive}
+        className={isActive ? 'active' : 'inactive'}
+        onClick={this.onClick}
+      >
         <i className={`fa fa-${icons[name]}`} />
         <span>{name}</span>
       </NavItem>

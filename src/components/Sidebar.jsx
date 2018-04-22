@@ -8,12 +8,14 @@ const Sidebar = ({ onClickNavItem, activeNavItem }) => (
   <div className="sidebar">
     <Container>
       <SiteTitle />
+      <hr />
       <Nav vertical>
         <NavButton activeNavItem={activeNavItem} name="About Me" onClick={onClickNavItem} />
         <NavButton activeNavItem={activeNavItem} name="Experience" onClick={onClickNavItem} />
         <NavButton activeNavItem={activeNavItem} name="Projects" onClick={onClickNavItem} />
         <NavButton activeNavItem={activeNavItem} name="Recommendations" onClick={onClickNavItem} />
       </Nav>
+      <hr />
     </Container>
   </div>
 );
