@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Container } from 'reactstrap';
 import PageContainer from './PageContainer';
 import AboutMePage from './AboutMePage';
+import RecommendationsPage from './RecommendationsPage';
+import ExperiencePage from './ExperiencePage';
 
 const Content = ({ activeNavItem }) => (
   <div className="content">
@@ -14,7 +16,7 @@ const Content = ({ activeNavItem }) => (
       ) : null}
       {activeNavItem === 'Experience' ? (
         <PageContainer title={activeNavItem}>
-          <p>I have content for {activeNavItem} page</p>
+          <ExperiencePage />
         </PageContainer>
       ) : null}
       {activeNavItem === 'Projects' ? (
@@ -24,7 +26,7 @@ const Content = ({ activeNavItem }) => (
       ) : null}
       {activeNavItem === 'Recommendations' ? (
         <PageContainer title={activeNavItem}>
-          <p>I have content for {activeNavItem} page</p>
+          <RecommendationsPage />
         </PageContainer>
       ) : null}
     </Container>
