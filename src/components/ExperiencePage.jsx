@@ -7,7 +7,8 @@ const ExperiencePage = () => (
       <CardBody>
         <CardTitle>Languages and Frameworks</CardTitle>
         <CardText>
-          HTML, CSS, JavaScript, jQuery, React, Ruby, Rails, MEAN, SQL, Java, Bootstrap
+          HTML, CSS, JavaScript(ES5 and ES6), jQuery, React, Ruby on Rails, NodeJS, AngularJS,
+          ExpressJS, MongoDB, SQL, Java, Bootstrap, Salesforce Lightning, SDFC Apex
         </CardText>
       </CardBody>
     </Card>
@@ -15,7 +16,7 @@ const ExperiencePage = () => (
     <Card>
       <CardBody>
         <CardTitle>Management Deployment</CardTitle>
-        <CardText>Git, GitHub, Command Line, Vagrant, NPM, Webpack, Maven, Gradle</CardText>
+        <CardText>Git, GitHub/GitLab, Command Line, Vagrant, NPM, Webpack, Maven, Gradle</CardText>
       </CardBody>
     </Card>
 

@@ -16,7 +16,14 @@ const RecomendationsPage = () => (
             </i>
           </p>
           <p>
-            - Dave Costantino, <i>CTO, Datarista Inc.</i>
+            -{' '}
+            <a
+              href="https://www.linkedin.com/in/davecostantino/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Dave Costantino
+            </a>, <i>CTO, Datarista Inc.</i>
           </p>
         </CardText>
       </CardBody>
@@ -37,7 +44,14 @@ const RecomendationsPage = () => (
             </i>
           </p>
           <p>
-            - Pat Sabatino, <i>CEO, Datarista Inc.</i>
+            -{' '}
+            <a
+              href="https://www.linkedin.com/in/patsabatino/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Pat Sabatino
+            </a>, <i>CEO, Datarista Inc.</i>
           </p>
         </CardText>
       </CardBody>
@@ -54,7 +68,14 @@ const RecomendationsPage = () => (
             </i>
           </p>
           <p>
-            - Patrick McCarty, <i>Student, GA Web Development Immersive</i>
+            -{' '}
+            <a
+              href="https://www.linkedin.com/in/patrick-mccarty/"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Patrick McCarty
+            </a>, <i>Student, GA Web Development Immersive</i>
           </p>
         </CardText>
       </CardBody>
