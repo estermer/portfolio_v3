@@ -18,9 +18,35 @@ code {
   padding-top: 2rem;
 }
 
+/* Background colors */
 .bg-main {
-  background-color: #2980b9 !important;
+  background-color: #2980b9;
 }
+
+.bg-react {
+  background-color: #61dafb;
+}
+
+.bg-rails {
+  background-color: #cc0000;
+}
+
+.bg-node {
+  background-color: #43853d;
+}
+
+.bg-jquery {
+  background-color: #0769ad;
+}
+
+.bg-learning {
+  background-color: #7f8c8d;
+}
+
+.bg-contributing {
+  background-color: #e67e22;
+}
+/* Background colors */
 
 /* Sidebar */
 .sidebar {
