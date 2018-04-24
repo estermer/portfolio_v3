@@ -27,20 +27,18 @@ const AboutMePage = () => (
       <CardBody>
         <CardTitle>A Little More About Me</CardTitle>
         <CardText>
-          <p>
-            I was born and raised in Binghamton, NY. I loved playing sports growing up, baseball,
-            football, and basketball. But around middle school I started running cross country and
-            track. I ran competitively all the way through to college where I had the honor of
-            winning a few National Championships.
-          </p>
-          <p>
-            After College I lived in Lynchburg, Virginia for sometime after getting married to my
-            wife and best friend.
-          </p>
-          <p>
-            Now I live in Provdence, RI where I have become quite the foodie, trying the vast
-            choices of great eateries in the area.
-          </p>
+          I was born and raised in Binghamton, NY. I loved playing sports growing up, baseball,
+          football, and basketball. But around middle school I started running cross country and
+          track. I ran competitively all the way through to college where I had the honor of winning
+          a few National Championships.
+        </CardText>
+        <CardText>
+          After College I lived in Lynchburg, Virginia for sometime after getting married to my wife
+          and best friend.
+        </CardText>
+        <CardText>
+          Now I live in Provdence, RI where I have become quite the foodie, trying the vast choices
+          of great eateries in the area.
         </CardText>
       </CardBody>
     </Card>

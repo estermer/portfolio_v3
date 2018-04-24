@@ -5,6 +5,10 @@ body {
   padding: 0;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 code {
   color: white;
 }
@@ -12,6 +16,10 @@ code {
 .container {
   padding-bottom: 2rem;
   padding-top: 2rem;
+}
+
+.bg-main {
+  background-color: #2980b9 !important;
 }
 
 /* Sidebar */
@@ -73,6 +81,24 @@ code {
 /* Content Container */
 .content {
   margin-left: 0;
+}
+
+.project-card {
+  height: 300px;
+  transition: all 0.25s ease-in-out;
+}
+
+.project-card:hover {
+  transform: translate(0, -7px);
+  -webkit-transform: translate(0, -7px);
+  -o-transform: translate(0, -7px);
+  -moz-transform: translate(0, -7px);
+}
+
+.project-img {
+  width: 100px;
+  margin: 0 auto;
+  margin-top: 1rem;
 }
 /* Content Container */
 

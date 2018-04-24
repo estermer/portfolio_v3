@@ -5,6 +5,7 @@ import PageContainer from './PageContainer';
 import AboutMePage from './AboutMePage';
 import RecommendationsPage from './RecommendationsPage';
 import ExperiencePage from './ExperiencePage';
+import ProjectsPage from './ProjectsPage';
 
 const Content = ({ activeNavItem }) => (
   <div className="content">
@@ -21,7 +22,7 @@ const Content = ({ activeNavItem }) => (
       ) : null}
       {activeNavItem === 'Projects' ? (
         <PageContainer title={activeNavItem}>
-          <p>I have content for {activeNavItem} page</p>
+          <ProjectsPage />
         </PageContainer>
       ) : null}
       {activeNavItem === 'Recommendations' ? (
