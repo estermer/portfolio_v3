@@ -1,5 +1,6 @@
 using EricstermerCom.Components;
 using EricstermerCom.Data;
+using EricstermerCom.Features.Home.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,8 @@ builder.Services.AddRazorComponents()
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("Default")
         ?? "Data Source=ericstermer.db"));
+
+builder.Services.AddScoped<GetFeaturedProjects>();
 
 builder.Services.AddAuthentication("EricstermerCookie")
     .AddCookie("EricstermerCookie", options =>
