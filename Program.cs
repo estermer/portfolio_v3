@@ -1,5 +1,6 @@
 using EricstermerCom.Components;
 using EricstermerCom.Data;
+using EricstermerCom.Features.Contact.Services;
 using EricstermerCom.Features.Experience.Services;
 using EricstermerCom.Features.Home.Services;
 using EricstermerCom.Features.Projects.Services;
@@ -19,6 +20,7 @@ builder.Services.AddScoped<GetFeaturedProjects>();
 builder.Services.AddScoped<GetSkills>();
 builder.Services.AddScoped<GetProjects>();
 builder.Services.AddScoped<GetRecommendations>();
+builder.Services.AddScoped<SubmitContact>();
 
 builder.Services.AddAuthentication("EricstermerCookie")
     .AddCookie("EricstermerCookie", options =>
