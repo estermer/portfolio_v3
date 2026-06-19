@@ -1,8 +1,16 @@
 @page "/projects"
+@using EricstermerCom.Features.Projects.Components
 
 <PageTitle>Projects · Eric Stermer</PageTitle>
+<meta name="description" content="Selected projects by Eric Stermer - open source contributions, learning projects, and apps built with Rails, Node, jQuery, and more." />
 
-<section class="placeholder">
-    <h1>Projects</h1>
-    <p>Coming in Step 6 — card grid + interactive filter.</p>
-</section>
+<header class="projects-header">
+    <h1 class="section-title">Projects</h1>
+    <p class="projects-intro">
+        A selection of work across open-source contributions, side projects,
+        and code-along exercises — grouped by what I was focused on at the
+        time.
+    </p>
+</header>
+
+<ProjectFilter />
