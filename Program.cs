@@ -1,3 +1,4 @@
+using System.Text;
 using EricstermerCom.Components;
 using EricstermerCom.Data;
 using EricstermerCom.Features.Admin;
@@ -90,6 +91,27 @@ app.MapPost("/api/admin/logout", async (HttpContext ctx, AdminAuthService auth) 
     ctx.Response.Redirect("/");
     return Results.Empty;
 }).DisableAntiforgery();
+
+app.MapGet("/sitemap.xml", (HttpContext ctx) =>
+{
+    var baseUrl = $"{ctx.Request.Scheme}://{ctx.Request.Host.Value}".TrimEnd('/');
+    var urls = new[]
+    {
+        ("/", "1.0", "weekly"),
+        ("/experience", "0.8", "monthly"),
+        ("/projects", "0.9", "weekly"),
+        ("/recommendations", "0.7", "monthly"),
+        ("/contact", "0.6", "monthly"),
+    };
+
+    var xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+              "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
+              string.Join("\n", urls.Select(u =>
+                  $"  <url>\n    <loc>{baseUrl}{u.Item1}</loc>\n    <changefreq>{u.Item3}</changefreq>\n    <priority>{u.Item2}</priority>\n  </url>")) +
+              "\n</urlset>\n";
+
+    return Results.Content(xml, "application/xml", Encoding.UTF8);
+});
 
 app.MapPost("/api/admin/login", async (HttpContext ctx, AdminAuthService auth) =>
 {

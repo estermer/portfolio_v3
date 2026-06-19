@@ -1,33 +1,52 @@
-# Dependencies
-node_modules
-npm-debug.log
+# .NET build artifacts
+bin/
+obj/
+out/
+*.user
+*.suo
 
-# Next.js build output
-.next
-out
+# .NET test results
+TestResults/
+coverage/
+*.coverage
 
-# Git
-.git
+# IDE
+.vs/
+.vscode/
+.idea/
+
+# Source control
+.git/
 .gitignore
+.gitattributes
 
-# Docker
+# Docker files
 Dockerfile
 .dockerignore
 docker-compose*.yml
 
-# IDE
-.idea
-.vscode
-*.swp
-*.swo
+# Docs
+README.md
+*.md
+
+# Logs
+*.log
+logs/
+
+# Database (don't bake the dev DB into the image)
+*.db
+*.db-shm
+*.db-wal
+
+# Environment
+.env
+.env.local
+appsettings.*.Local.json
+secrets.json
+
+# Archive (v3 source for reference)
+archive/
 
 # OS
 .DS_Store
 Thumbs.db
-
-# Documentation
-*.md
-
-# Environment files (add back if needed)
-.env*.local
-

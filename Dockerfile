@@ -1,53 +1,50 @@
-# Stage 1: Dependencies
-FROM node:22-alpine AS deps
+# Stage 1: Restore + publish
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+# Copy csproj first for layer caching
+COPY EricstermerCom.csproj ./
+RUN dotnet restore EricstermerCom.csproj
+
+# Copy source and publish
+COPY . ./
+RUN dotnet publish EricstermerCom.csproj \
+    -c Release \
+    -o /app/publish \
+    --no-restore \
+    /p:UseAppHost=false
+
+# Stage 2: Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 
-# Install dependencies needed for node-gyp (if any native modules)
-RUN apk add --no-cache libc6-compat
+# Install ICU for globalization support
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libicu74 \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy package files
-COPY package.json package-lock.json ./
+# Create non-root user
+RUN groupadd --system --gid 1001 ericstermer \
+    && useradd --system --uid 1001 --gid ericstermer \
+    --home /app --shell /sbin/nologin ericstermer
 
-# Install dependencies
-RUN npm ci --only=production
+# Copy published app
+COPY --from=build /app/publish ./
 
-# Stage 2: Builder
-FROM node:22-alpine AS builder
-WORKDIR /app
+# Create data directory for SQLite (volume mount target)
+RUN mkdir -p /app/data && chown -R ericstermer:ericstermer /app
 
-# Copy dependencies from deps stage
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+USER ericstermer
 
-# Build the Next.js application
-RUN npm run build
+ENV ASPNETCORE_URLS=http://+:8080 \
+    ASPNETCORE_ENVIRONMENT=Production \
+    ConnectionStrings__Default="Data Source=/app/data/ericstermer.db" \
+    Admin__Email=admin@ericstermer.com \
+    Admin__Password=CHANGE_ME_IN_PRODUCTION
 
-# Stage 3: Production runner
-FROM node:22-alpine AS runner
-WORKDIR /app
+EXPOSE 8080
 
-# Set to production environment
-ENV NODE_ENV=production
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD wget --quiet --tries=1 --spider http://localhost:8080/ || exit 1
 
-# Create non-root user for security
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-# Copy only necessary files from builder
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-
-# Set correct permissions
-USER nextjs
-
-# Expose the port Next.js runs on
-EXPOSE 3000
-
-# Set hostname to listen on all interfaces
-ENV HOSTNAME="0.0.0.0"
-ENV PORT=3000
-
-# Start the application
-CMD ["node", "server.js"]
-
+ENTRYPOINT ["dotnet", "EricstermerCom.dll"]
