@@ -3,6 +3,7 @@ using EricstermerCom.Data;
 using EricstermerCom.Features.Experience.Services;
 using EricstermerCom.Features.Home.Services;
 using EricstermerCom.Features.Projects.Services;
+using EricstermerCom.Features.Recommendations.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<GetFeaturedProjects>();
 builder.Services.AddScoped<GetSkills>();
 builder.Services.AddScoped<GetProjects>();
+builder.Services.AddScoped<GetRecommendations>();
 
 builder.Services.AddAuthentication("EricstermerCookie")
     .AddCookie("EricstermerCookie", options =>
