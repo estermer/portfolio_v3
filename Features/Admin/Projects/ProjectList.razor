@@ -1,0 +1,106 @@
+@page "/admin/projects"
+@layout AdminLayout
+@attribute [Authorize]
+@rendermode InteractiveServer
+@using EricstermerCom.Features.Admin.Projects
+@inject ProjectAdminService Service
+@inject NavigationManager Nav
+
+<PageTitle>Projects · Admin</PageTitle>
+
+<header class="admin-page-header">
+    <h1>Projects</h1>
+    <div class="admin-page-actions">
+        <a class="admin-btn admin-btn-primary" href="/admin/projects/edit">+ New project</a>
+    </div>
+</header>
+
+@if (_projects is null)
+{
+    <p class="admin-empty">Loading…</p>
+}
+else if (!_projects.Any())
+{
+    <p class="admin-empty">No projects yet. <a href="/admin/projects/edit">Create the first one.</a></p>
+}
+else
+{
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th style="width:60px">Order</th>
+                <th>Title</th>
+                <th>Tags</th>
+                <th>URL</th>
+                <th style="width:180px"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in _projects)
+            {
+                <tr>
+                    <td>@p.SortOrder</td>
+                    <td><strong>@p.Title</strong></td>
+                    <td><code>@p.TechTags</code></td>
+                    <td>
+                        @if (!string.IsNullOrWhiteSpace(p.Url))
+                        {
+                            <a href="@p.Url" target="_blank" rel="noopener noreferrer">↗</a>
+                        }
+                    </td>
+                    <td>
+                        <div class="admin-actions">
+                            <a class="admin-btn" href="@($"admin/projects/edit/{p.Id}")">Edit</a>
+                            <button type="button" class="admin-btn admin-btn-danger" @onclick="() => ConfirmDelete(p)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (_pendingDelete is not null)
+{
+    <div class="confirm-overlay" role="dialog" aria-modal="true">
+        <div class="confirm-card">
+            <h3>Delete project?</h3>
+            <p>This will permanently remove <strong>@_pendingDelete.Title</strong>.</p>
+            <div class="admin-form-actions">
+                <button type="button" class="admin-btn admin-btn-danger" @onclick="DeleteAsync">Delete</button>
+                <button type="button" class="admin-btn" @onclick="() => _pendingDelete = null">Cancel</button>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+.confirm-overlay {
+    position: fixed; inset: 0; background: rgba(41,37,36,0.45);
+    display: flex; align-items: center; justify-content: center; z-index: 200;
+}
+.confirm-card {
+    background: var(--surface); border-radius: var(--radius); padding: 1.5rem;
+    max-width: 24rem; width: 90%; box-shadow: var(--shadow-hover);
+}
+.confirm-card h3 { margin: 0 0 0.5rem; }
+.confirm-card p { margin: 0 0 1rem; color: var(--text-muted); }
+</style>
+
+@code {
+    private List<Models.Project>? _projects;
+    private Models.Project? _pendingDelete;
+
+    protected override async Task OnInitializedAsync()
+        => _projects = (await Service.ListAsync()).ToList();
+
+    private void ConfirmDelete(Models.Project project) => _pendingDelete = project;
+
+    private async Task DeleteAsync()
+    {
+        if (_pendingDelete is null) return;
+        await Service.DeleteAsync(_pendingDelete.Id);
+        _projects = (await Service.ListAsync()).ToList();
+        _pendingDelete = null;
+    }
+}

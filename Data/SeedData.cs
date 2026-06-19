@@ -18,7 +18,29 @@ public static class SeedData
         if (!await db.Recommendations.AnyAsync())
             await SeedRecommendationsAsync(db);
 
+        if (!await db.SiteUsers.AnyAsync())
+            await SeedAdminUserAsync(services, db);
+
         await db.SaveChangesAsync();
+    }
+
+    private static async Task SeedAdminUserAsync(IServiceProvider services, AppDbContext db)
+    {
+        var config = services.GetRequiredService<IConfiguration>();
+        var email = config["Admin:Email"] ?? "admin@ericstermer.com";
+        var password = config["Admin:Password"] ?? "Admin123!";
+        var displayName = config["Admin:DisplayName"] ?? "Eric Stermer";
+
+        var user = new SiteUser
+        {
+            Email = email,
+            DisplayName = displayName,
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(password)
+        };
+        db.SiteUsers.Add(user);
+
+        var logger = services.GetRequiredService<ILoggerFactory>().CreateLogger("SeedData");
+        logger.LogWarning("Seeded admin user '{Email}'. CHANGE THE DEFAULT PASSWORD before going to production.", email);
     }
 
     private static async Task SeedProjectsAsync(AppDbContext db)

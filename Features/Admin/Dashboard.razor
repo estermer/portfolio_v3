@@ -1,0 +1,51 @@
+@page "/admin"
+@layout AdminLayout
+@attribute [Authorize]
+@rendermode InteractiveServer
+@using EricstermerCom.Data
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext Db
+
+<PageTitle>Admin Dashboard · Eric Stermer</PageTitle>
+
+<header class="admin-page-header">
+    <h1>Dashboard</h1>
+</header>
+
+<section class="admin-stats">
+    <div class="admin-stat">
+        <div class="admin-stat-label">Projects</div>
+        <div class="admin-stat-value">@_projectCount</div>
+        <a class="admin-stat-link" href="/admin/projects">Manage →</a>
+    </div>
+    <div class="admin-stat">
+        <div class="admin-stat-label">Skills</div>
+        <div class="admin-stat-value">@_skillCount</div>
+        <a class="admin-stat-link" href="/admin/skills">Manage →</a>
+    </div>
+    <div class="admin-stat">
+        <div class="admin-stat-label">Recommendations</div>
+        <div class="admin-stat-value">@_recCount</div>
+        <a class="admin-stat-link" href="/admin/recommendations">Manage →</a>
+    </div>
+    <div class="admin-stat">
+        <div class="admin-stat-label">Unread Messages</div>
+        <div class="admin-stat-value">@_unreadCount</div>
+        <a class="admin-stat-link" href="/admin/messages">Inbox →</a>
+    </div>
+</section>
+
+@code {
+    private int _projectCount;
+    private int _skillCount;
+    private int _recCount;
+    private int _unreadCount;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _projectCount = await Db.Projects.CountAsync();
+        _skillCount = await Db.Skills.CountAsync();
+        _recCount = await Db.Recommendations.CountAsync();
+        _unreadCount = await Db.ContactSubmissions.CountAsync(c => !c.IsRead);
+    }
+}

@@ -1,0 +1,98 @@
+@page "/admin/skills"
+@layout AdminLayout
+@attribute [Authorize]
+@rendermode InteractiveServer
+@using EricstermerCom.Features.Admin.Skills
+@inject SkillAdminService Service
+
+<PageTitle>Skills · Admin</PageTitle>
+
+<header class="admin-page-header">
+    <h1>Skills</h1>
+    <div class="admin-page-actions">
+        <a class="admin-btn admin-btn-primary" href="/admin/skills/edit">+ New skill</a>
+    </div>
+</header>
+
+@if (_skills is null)
+{
+    <p class="admin-empty">Loading…</p>
+}
+else if (!_skills.Any())
+{
+    <p class="admin-empty">No skills yet.</p>
+}
+else
+{
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th style="width:60px">Order</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th style="width:180px"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in _skills)
+            {
+                <tr>
+                    <td>@s.SortOrder</td>
+                    <td><strong>@s.Name</strong></td>
+                    <td>@s.Category</td>
+                    <td>
+                        <div class="admin-actions">
+                            <a class="admin-btn" href="@($"admin/skills/edit/{s.Id}")">Edit</a>
+                            <button type="button" class="admin-btn admin-btn-danger" @onclick="() => ConfirmDelete(s)">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (_pendingDelete is not null)
+{
+    <div class="confirm-overlay" role="dialog" aria-modal="true">
+        <div class="confirm-card">
+            <h3>Delete skill?</h3>
+            <p>This will permanently remove <strong>@_pendingDelete.Name</strong>.</p>
+            <div class="admin-form-actions">
+                <button type="button" class="admin-btn admin-btn-danger" @onclick="DeleteAsync">Delete</button>
+                <button type="button" class="admin-btn" @onclick="() => _pendingDelete = null">Cancel</button>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+.confirm-overlay {
+    position: fixed; inset: 0; background: rgba(41,37,36,0.45);
+    display: flex; align-items: center; justify-content: center; z-index: 200;
+}
+.confirm-card {
+    background: var(--surface); border-radius: var(--radius); padding: 1.5rem;
+    max-width: 24rem; width: 90%; box-shadow: var(--shadow-hover);
+}
+.confirm-card h3 { margin: 0 0 0.5rem; }
+.confirm-card p { margin: 0 0 1rem; color: var(--text-muted); }
+</style>
+
+@code {
+    private List<Models.Skill>? _skills;
+    private Models.Skill? _pendingDelete;
+
+    protected override async Task OnInitializedAsync()
+        => _skills = (await Service.ListAsync()).ToList();
+
+    private void ConfirmDelete(Models.Skill skill) => _pendingDelete = skill;
+
+    private async Task DeleteAsync()
+    {
+        if (_pendingDelete is null) return;
+        await Service.DeleteAsync(_pendingDelete.Id);
+        _skills = (await Service.ListAsync()).ToList();
+        _pendingDelete = null;
+    }
+}

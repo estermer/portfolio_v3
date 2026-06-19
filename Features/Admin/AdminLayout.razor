@@ -1,0 +1,28 @@
+@inherits LayoutComponentBase
+@attribute [Authorize]
+
+<div class="admin-shell">
+    <aside class="admin-sidebar">
+        <a class="admin-brand" href="/admin">
+            <span class="admin-brand-mark">A</span>
+            <span>Admin</span>
+        </a>
+        <nav class="admin-nav" aria-label="Admin sections">
+            <NavLink class="admin-nav-link" href="/admin" Match="NavLinkMatch.All">Dashboard</NavLink>
+            <NavLink class="admin-nav-link" href="/admin/projects">Projects</NavLink>
+            <NavLink class="admin-nav-link" href="/admin/skills">Skills</NavLink>
+            <NavLink class="admin-nav-link" href="/admin/recommendations">Recommendations</NavLink>
+            <NavLink class="admin-nav-link" href="/admin/messages">Messages</NavLink>
+        </nav>
+        <div class="admin-sidebar-footer">
+            <a class="admin-link-back" href="/">← Back to site</a>
+            <form method="post" action="/api/admin/logout" class="admin-logout-form">
+                <AntiforgeryToken />
+                <button type="submit" class="admin-logout-btn">Log out</button>
+            </form>
+        </div>
+    </aside>
+    <main class="admin-main">
+        @Body
+    </main>
+</div>

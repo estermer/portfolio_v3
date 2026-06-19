@@ -1,0 +1,49 @@
+@page "/admin/login"
+@layout MainLayout
+
+<PageTitle>Admin Login · Eric Stermer</PageTitle>
+
+<section class="login-shell">
+    <div class="login-card card">
+        <a class="login-brand" href="/">
+            <span class="login-brand-mark">ES</span>
+            <span>Eric Stermer</span>
+        </a>
+        <h1 class="login-title">Admin sign-in</h1>
+        <p class="login-sub">Enter your admin credentials.</p>
+
+        @if (!string.IsNullOrEmpty(Error))
+        {
+            <div class="form-error" role="alert">@Error</div>
+        }
+
+        <form method="post" action="/api/admin/login" class="login-form" novalidate>
+            <AntiforgeryToken />
+            <div class="admin-field">
+                <label for="login-email">Email</label>
+                <input id="login-email" name="Email" type="email" autocomplete="email"
+                       value="@Email" required />
+            </div>
+            <div class="admin-field">
+                <label for="login-password">Password</label>
+                <input id="login-password" name="Password" type="password" autocomplete="current-password" required />
+            </div>
+            @if (!string.IsNullOrEmpty(ReturnUrl))
+            {
+                <input type="hidden" name="ReturnUrl" value="@ReturnUrl" />
+            }
+            <button type="submit" class="btn btn-primary">Sign in</button>
+        </form>
+    </div>
+</section>
+
+@code {
+    [SupplyParameterFromQuery]
+    public string? ReturnUrl { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? Email { get; set; }
+
+    [SupplyParameterFromQuery(Name = "error")]
+    public string? Error { get; set; }
+}

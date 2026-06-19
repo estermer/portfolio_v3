@@ -1,0 +1,105 @@
+@page "/admin/skills/edit"
+@page "/admin/skills/edit/{Id:int}"
+@layout AdminLayout
+@attribute [Authorize]
+@rendermode InteractiveServer
+@using EricstermerCom.Features.Admin.Skills
+@inject SkillAdminService Service
+@inject NavigationManager Nav
+
+<PageTitle>@(_isNew ? "New skill" : "Edit skill") · Admin</PageTitle>
+
+<header class="admin-page-header">
+    <h1>@(_isNew ? "New skill" : "Edit skill")</h1>
+    <div class="admin-page-actions">
+        <a class="admin-btn" href="/admin/skills">← Back to list</a>
+    </div>
+</header>
+
+<EditForm Model="_model" OnValidSubmit="SaveAsync" FormName="skill-edit" class="admin-form">
+    <DataAnnotationsValidator />
+    @if (!string.IsNullOrEmpty(_error))
+    {
+        <div class="form-error" role="alert">@_error</div>
+    }
+    <div class="admin-field">
+        <label for="s-name">Name</label>
+        <InputText id="s-name" @bind-Value="_model.Name" />
+    </div>
+    <div class="admin-field">
+        <label for="s-cat">Category</label>
+        <InputText id="s-cat" @bind-Value="_model.Category" list="skill-categories" />
+        <datalist id="skill-categories">
+            <option value="Languages & Frameworks"></option>
+            <option value="Tools & Deployment"></option>
+            <option value="Methodologies"></option>
+        </datalist>
+    </div>
+    <div class="admin-field">
+        <label for="s-order">Sort order</label>
+        <InputNumber id="s-order" TValue="int" @bind-Value="_model.SortOrder" />
+    </div>
+    <div class="admin-form-actions">
+        <button type="submit" class="admin-btn admin-btn-primary" disabled="@_saving">
+            @(_saving ? "Saving…" : "Save")
+        </button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter] public int? Id { get; set; }
+
+    private UpsertModel _model = new();
+    private bool _isNew => Id is null or 0;
+    private bool _saving;
+    private string? _error;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is int id and > 0)
+        {
+            var entity = await Service.GetAsync(id);
+            if (entity is not null)
+            {
+                _model = new UpsertModel
+                {
+                    Id = entity.Id,
+                    Name = entity.Name,
+                    Category = entity.Category,
+                    SortOrder = entity.SortOrder
+                };
+            }
+        }
+    }
+
+    private async Task SaveAsync()
+    {
+        _saving = true;
+        _error = null;
+        try
+        {
+            await Service.UpsertAsync(new SkillUpsertRequest(
+                _model.Id,
+                _model.Name,
+                _model.Category,
+                _model.SortOrder));
+            Nav.NavigateTo("/admin/skills");
+        }
+        catch (Exception ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private sealed class UpsertModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Category { get; set; } = string.Empty;
+        public int SortOrder { get; set; } = 10;
+    }
+}

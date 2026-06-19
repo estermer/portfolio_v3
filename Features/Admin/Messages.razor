@@ -1,0 +1,90 @@
+@page "/admin/messages"
+@layout AdminLayout
+@attribute [Authorize]
+@rendermode InteractiveServer
+@using EricstermerCom.Data
+@using EricstermerCom.Models
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext Db
+
+<PageTitle>Messages · Admin</PageTitle>
+
+<header class="admin-page-header">
+    <h1>Messages</h1>
+    <div class="admin-page-actions">
+        <button type="button" class="admin-btn" @onclick="RefreshAsync" disabled="@_loading">Refresh</button>
+    </div>
+</header>
+
+@if (_loading && _messages is null)
+{
+    <p class="admin-empty">Loading…</p>
+}
+else if (_messages is null || !_messages.Any())
+{
+    <p class="admin-empty">No messages yet.</p>
+}
+else
+{
+    <div style="display:flex; flex-direction:column; gap:0.75rem;">
+        @foreach (var m in _messages)
+        {
+            <article class="admin-message @(m.IsRead ? "" : "unread")">
+                <div class="admin-message-meta">
+                    <div>
+                        <span class="admin-message-name">@m.Name</span>
+                        ·
+                        <a href="mailto:@m.Email">@m.Email</a>
+                    </div>
+                    <div>
+                        <span>@m.CreatedAt.ToLocalTime().ToString("MMM d, yyyy h:mm tt")</span>
+                    </div>
+                </div>
+                <p class="admin-message-body">@m.Message</p>
+                <div class="admin-actions">
+                    @if (!m.IsRead)
+                    {
+                        <button type="button" class="admin-btn" @onclick="() => MarkReadAsync(m)">Mark as read</button>
+                    }
+                    <button type="button" class="admin-btn admin-btn-danger" @onclick="() => DeleteAsync(m)">Delete</button>
+                </div>
+            </article>
+        }
+    </div>
+}
+
+@code {
+    private List<ContactSubmission>? _messages;
+    private bool _loading;
+
+    protected override async Task OnInitializedAsync()
+        => await RefreshAsync();
+
+    private async Task RefreshAsync()
+    {
+        _loading = true;
+        try
+        {
+            _messages = await Db.ContactSubmissions
+                .OrderByDescending(c => c.CreatedAt)
+                .ToListAsync();
+        }
+        finally
+        {
+            _loading = false;
+        }
+    }
+
+    private async Task MarkReadAsync(ContactSubmission m)
+    {
+        m.IsRead = true;
+        await Db.SaveChangesAsync();
+    }
+
+    private async Task DeleteAsync(ContactSubmission m)
+    {
+        Db.ContactSubmissions.Remove(m);
+        await Db.SaveChangesAsync();
+        await RefreshAsync();
+    }
+}
