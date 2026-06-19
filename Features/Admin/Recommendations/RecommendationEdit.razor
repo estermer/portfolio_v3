@@ -1,0 +1,114 @@
+@page "/admin/recommendations/edit"
+@page "/admin/recommendations/edit/{Id:int}"
+@layout AdminLayout
+@attribute [Authorize]
+@rendermode InteractiveServer
+@using EricstermerCom.Features.Admin.Recommendations
+@inject RecommendationAdminService Service
+@inject NavigationManager Nav
+
+<PageTitle>@(_isNew ? "New recommendation" : "Edit recommendation") · Admin</PageTitle>
+
+<header class="admin-page-header">
+    <h1>@(_isNew ? "New recommendation" : "Edit recommendation")</h1>
+    <div class="admin-page-actions">
+        <a class="admin-btn" href="/admin/recommendations">← Back to list</a>
+    </div>
+</header>
+
+<EditForm Model="_model" OnValidSubmit="SaveAsync" FormName="rec-edit" class="admin-form">
+    <DataAnnotationsValidator />
+    @if (!string.IsNullOrEmpty(_error))
+    {
+        <div class="form-error" role="alert">@_error</div>
+    }
+    <div class="admin-field">
+        <label for="r-name">Author name</label>
+        <InputText id="r-name" @bind-Value="_model.AuthorName" />
+    </div>
+    <div class="admin-field">
+        <label for="r-title">Author title</label>
+        <InputText id="r-title" @bind-Value="_model.AuthorTitle" placeholder="CTO, Acme Inc." />
+    </div>
+    <div class="admin-field">
+        <label for="r-content">Content</label>
+        <InputTextArea id="r-content" @bind-Value="_model.Content" rows="6" />
+    </div>
+    <div class="admin-field">
+        <label for="r-li">LinkedIn URL (optional)</label>
+        <InputText id="r-li" type="url" @bind-Value="_model.LinkedInUrl" placeholder="https://www.linkedin.com/in/..." />
+    </div>
+    <div class="admin-field">
+        <label for="r-order">Sort order</label>
+        <InputNumber id="r-order" TValue="int" @bind-Value="_model.SortOrder" />
+    </div>
+    <div class="admin-form-actions">
+        <button type="submit" class="admin-btn admin-btn-primary" disabled="@_saving">
+            @(_saving ? "Saving…" : "Save")
+        </button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter] public int? Id { get; set; }
+
+    private UpsertModel _model = new();
+    private bool _isNew => Id is null or 0;
+    private bool _saving;
+    private string? _error;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is int id and > 0)
+        {
+            var entity = await Service.GetAsync(id);
+            if (entity is not null)
+            {
+                _model = new UpsertModel
+                {
+                    Id = entity.Id,
+                    AuthorName = entity.AuthorName,
+                    AuthorTitle = entity.AuthorTitle,
+                    Content = entity.Content,
+                    LinkedInUrl = entity.LinkedInUrl ?? string.Empty,
+                    SortOrder = entity.SortOrder
+                };
+            }
+        }
+    }
+
+    private async Task SaveAsync()
+    {
+        _saving = true;
+        _error = null;
+        try
+        {
+            await Service.UpsertAsync(new RecommendationUpsertRequest(
+                _model.Id,
+                _model.AuthorName,
+                _model.AuthorTitle,
+                _model.Content,
+                _model.LinkedInUrl,
+                _model.SortOrder));
+            Nav.NavigateTo("/admin/recommendations");
+        }
+        catch (Exception ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private sealed class UpsertModel
+    {
+        public int Id { get; set; }
+        public string AuthorName { get; set; } = string.Empty;
+        public string AuthorTitle { get; set; } = string.Empty;
+        public string Content { get; set; } = string.Empty;
+        public string LinkedInUrl { get; set; } = string.Empty;
+        public int SortOrder { get; set; } = 10;
+    }
+}

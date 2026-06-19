@@ -1,0 +1,123 @@
+@page "/admin/projects/edit"
+@page "/admin/projects/edit/{Id:int}"
+@layout AdminLayout
+@attribute [Authorize]
+@rendermode InteractiveServer
+@using EricstermerCom.Features.Admin.Projects
+@inject ProjectAdminService Service
+@inject NavigationManager Nav
+
+<PageTitle>@(_isNew ? "New project" : "Edit project") · Admin</PageTitle>
+
+<header class="admin-page-header">
+    <h1>@(_isNew ? "New project" : "Edit project")</h1>
+    <div class="admin-page-actions">
+        <a class="admin-btn" href="/admin/projects">← Back to list</a>
+    </div>
+</header>
+
+<EditForm Model="_model" OnValidSubmit="SaveAsync" FormName="project-edit" class="admin-form">
+    <DataAnnotationsValidator />
+    @if (!string.IsNullOrEmpty(_error))
+    {
+        <div class="form-error" role="alert">@_error</div>
+    }
+    <div class="admin-field">
+        <label for="p-title">Title</label>
+        <InputText id="p-title" @bind-Value="_model.Title" />
+    </div>
+    <div class="admin-field">
+        <label for="p-desc">Description</label>
+        <InputTextArea id="p-desc" @bind-Value="_model.Description" rows="3" />
+    </div>
+    <div class="admin-field">
+        <label for="p-tags">Tech tags (comma-separated)</label>
+        <InputText id="p-tags" @bind-Value="_model.TechTags" placeholder="e.g. rails, node" />
+        <span class="admin-field-help">Used by the projects page filter.</span>
+    </div>
+    <div class="admin-field">
+        <label for="p-img">Image URL</label>
+        <InputText id="p-img" @bind-Value="_model.ImageUrl" placeholder="images/projects/your.png" />
+    </div>
+    <div class="admin-field">
+        <label for="p-url">Project URL (optional)</label>
+        <InputText id="p-url" type="url" @bind-Value="_model.Url" placeholder="https://..." />
+    </div>
+    <div class="admin-field">
+        <label for="p-order">Sort order</label>
+        <InputNumber id="p-order" TValue="int" @bind-Value="_model.SortOrder" />
+        <span class="admin-field-help">Lower numbers appear first.</span>
+    </div>
+    <div class="admin-form-actions">
+        <button type="submit" class="admin-btn admin-btn-primary" disabled="@_saving">
+            @(_saving ? "Saving…" : "Save")
+        </button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter] public int? Id { get; set; }
+
+    private UpsertModel _model = new();
+    private bool _isNew => Id is null or 0;
+    private bool _saving;
+    private string? _error;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Id is int id and > 0)
+        {
+            var entity = await Service.GetAsync(id);
+            if (entity is not null)
+            {
+                _model = new UpsertModel
+                {
+                    Id = entity.Id,
+                    Title = entity.Title,
+                    Description = entity.Description,
+                    TechTags = entity.TechTags,
+                    ImageUrl = entity.ImageUrl,
+                    Url = entity.Url ?? string.Empty,
+                    SortOrder = entity.SortOrder
+                };
+            }
+        }
+    }
+
+    private async Task SaveAsync()
+    {
+        _saving = true;
+        _error = null;
+        try
+        {
+            await Service.UpsertAsync(new ProjectUpsertRequest(
+                _model.Id,
+                _model.Title,
+                _model.Description,
+                _model.TechTags,
+                _model.ImageUrl,
+                _model.Url,
+                _model.SortOrder));
+            Nav.NavigateTo("/admin/projects");
+        }
+        catch (Exception ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            _saving = false;
+        }
+    }
+
+    private sealed class UpsertModel
+    {
+        public int Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string TechTags { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = "images/projects/";
+        public string Url { get; set; } = string.Empty;
+        public int SortOrder { get; set; } = 100;
+    }
+}
