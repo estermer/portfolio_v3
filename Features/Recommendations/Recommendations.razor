@@ -1,8 +1,44 @@
 @page "/recommendations"
+@using EricstermerCom.Features.Recommendations.Services
+@inject GetRecommendations GetRecommendations
 
 <PageTitle>Recommendations · Eric Stermer</PageTitle>
+<meta name="description" content="What colleagues, managers, and students have said about working with Eric Stermer." />
 
-<section class="placeholder">
-    <h1>Recommendations</h1>
-    <p>Coming in Step 7 — quote cards.</p>
+<header class="recs-header">
+    <h1 class="section-title">Recommendations</h1>
+    <p class="recs-intro">
+        Kind words from people I've worked with, managed for, and taught.
+    </p>
+</header>
+
+<section class="recs-list">
+    @foreach (var rec in _recommendations)
+    {
+        <article class="card rec-card">
+            <blockquote class="rec-quote">
+                <span class="rec-quote-mark" aria-hidden="true">&ldquo;</span>
+                <p>@rec.Content</p>
+            </blockquote>
+            <footer class="rec-author">
+                @if (!string.IsNullOrWhiteSpace(rec.LinkedInUrl))
+                {
+                    <a href="@rec.LinkedInUrl" target="_blank" rel="noopener noreferrer"
+                       class="rec-author-name">@rec.AuthorName</a>
+                }
+                else
+                {
+                    <span class="rec-author-name">@rec.AuthorName</span>
+                }
+                <span class="rec-author-title">, @rec.AuthorTitle</span>
+            </footer>
+        </article>
+    }
 </section>
+
+@code {
+    private IReadOnlyList<Models.Recommendation> _recommendations = Array.Empty<Models.Recommendation>();
+
+    protected override async Task OnInitializedAsync()
+        => _recommendations = await GetRecommendations.HandleAsync();
+}
