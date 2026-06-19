@@ -1,5 +1,6 @@
 using EricstermerCom.Components;
 using EricstermerCom.Data;
+using EricstermerCom.Features.Experience.Services;
 using EricstermerCom.Features.Home.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         ?? "Data Source=ericstermer.db"));
 
 builder.Services.AddScoped<GetFeaturedProjects>();
+builder.Services.AddScoped<GetSkills>();
 
 builder.Services.AddAuthentication("EricstermerCookie")
     .AddCookie("EricstermerCookie", options =>
