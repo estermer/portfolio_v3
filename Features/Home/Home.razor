@@ -1,8 +1,84 @@
 @page "/"
+@using EricstermerCom.Features.Home.Services
+@inject GetFeaturedProjects GetFeaturedProjects
 
 <PageTitle>Eric Stermer · Software Engineer</PageTitle>
+<meta name="description" content="Eric Stermer — software engineer based in Providence, RI. Full-stack developer building with React, Node, Rails, and .NET." />
 
-<section class="placeholder">
-    <h1>Home</h1>
-    <p>Coming in Step 4 — hero, mission, and featured projects.</p>
+<section class="hero">
+    <div class="hero-copy">
+        <p class="hero-eyebrow">Software Engineer · Providence, RI</p>
+        <h1 class="hero-name">Eric Stermer.</h1>
+        <p class="hero-tagline">
+            I build thoughtful, full-stack software — from React front-ends
+            to Rails and Node APIs, and now .NET 10 &amp; Blazor.
+        </p>
+        <div class="hero-actions">
+            <a class="btn btn-primary" href="/projects">View projects</a>
+            <a class="btn btn-ghost" href="/contact">Get in touch</a>
+        </div>
+    </div>
+    <div class="hero-avatar">
+        <img src="images/avatar.jpg" alt="Eric Stermer" width="180" height="180" />
+    </div>
 </section>
+
+<section class="mission">
+    <h2 class="section-title">My Mission</h2>
+    <div class="mission-grid">
+        <article class="card mission-card">
+            <h3 class="mission-card-title">Mission</h3>
+            <p>
+                I strive to find solutions that drive incremental change in
+                simple everyday experiences.
+            </p>
+        </article>
+        <article class="card mission-card">
+            <h3 class="mission-card-title">My Coding Story</h3>
+            <p>
+                My interest in coding began when I watched <em>Coding Stars</em>
+                and completed <em>The Hour of Code</em> on Khan Academy. From
+                that moment I knew I had found my passion.
+            </p>
+        </article>
+        <article class="card mission-card">
+            <h3 class="mission-card-title">A Little More About Me</h3>
+            <p>
+                I grew up in Binghamton, NY playing every sport I could,
+                eventually finding my stride in distance running. I ran
+                competitively through college and won a few National
+                Championships. After college I lived in Lynchburg, VA, and now
+                call Providence, RI home — where I've become a bit of a foodie
+                working my way through the local food scene.
+            </p>
+        </article>
+    </div>
+</section>
+
+<section class="featured">
+    <div class="featured-header">
+        <h2 class="section-title">Featured Projects</h2>
+        <a class="featured-all" href="/projects">See all →</a>
+    </div>
+    <div class="featured-grid">
+        @foreach (var project in _projects)
+        {
+            <article class="card project-card">
+                <a class="project-card-image" href="@project.Url" target="_blank" rel="noopener noreferrer">
+                    <img src="@project.ImageUrl" alt="@project.Title" loading="lazy" />
+                </a>
+                <div class="project-card-body">
+                    <h3 class="project-card-title">@project.Title</h3>
+                    <p class="project-card-desc">@project.Description</p>
+                </div>
+            </article>
+        }
+    </div>
+</section>
+
+@code {
+    private IReadOnlyList<Models.Project> _projects = Array.Empty<Models.Project>();
+
+    protected override async Task OnInitializedAsync()
+        => _projects = await GetFeaturedProjects.HandleAsync();
+}
