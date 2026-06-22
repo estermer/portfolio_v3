@@ -18,6 +18,10 @@ out/
 appsettings.*.Local.json
 secrets.json
 
+# Compose / env
+.env
+.env.local
+
 # .NET Aspire
 .aspire/
 
