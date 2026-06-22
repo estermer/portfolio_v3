@@ -1,0 +1,36 @@
+@inject IConfiguration Config
+
+<HeadContent>
+    @{
+        var baseUrl = (Config["Site:BaseUrl"] ?? "https://ericstermer.com").TrimEnd('/');
+        var path = string.IsNullOrEmpty(Path) ? "/" : Path;
+        var url = $"{baseUrl}{path}";
+        var imagePath = string.IsNullOrWhiteSpace(Image) ? "images/avatar.jpg" : Image.TrimStart('/');
+        var imageUrl = $"{baseUrl}/{imagePath}";
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Title))
+    {
+        <meta property="og:title" content="@Title" />
+        <meta name="twitter:title" content="@Title" />
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Description))
+    {
+        <meta property="og:description" content="@Description" />
+        <meta name="twitter:description" content="@Description" />
+    }
+
+    <meta property="og:url" content="@url" />
+    <link rel="canonical" href="@url" />
+
+    <meta property="og:image" content="@imageUrl" />
+    <meta name="twitter:image" content="@imageUrl" />
+</HeadContent>
+
+@code {
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public string? Description { get; set; }
+    [Parameter] public string Path { get; set; } = "/";
+    [Parameter] public string? Image { get; set; }
+}
