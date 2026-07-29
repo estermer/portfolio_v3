@@ -1,86 +1,221 @@
 @page "/"
 @using EricstermerCom.Features.Home.Services
+@using EricstermerCom.Features.Experience.Services
+@using EricstermerCom.Features.Recommendations.Services
 @inject GetFeaturedProjects GetFeaturedProjects
+@inject GetSkills GetSkills
+@inject GetRecommendations GetRecommendations
 
-<PageTitle>Eric Stermer · Software Engineer</PageTitle>
-<SeoMeta Title="Eric Stermer · Software Engineer"
-         Description="Eric Stermer — software engineer based in Providence, RI. Full-stack developer building with React, Node, Rails, and .NET."
+<PageTitle>Eric Stermer · Director of IT Operations</PageTitle>
+<SeoMeta Title="Eric Stermer · Director of IT Operations"
+         Description="Eric Stermer — Director of IT Operations. From writing code to leading engineering teams and IT operations."
          Path="/" />
 
-<section class="hero">
-    <div class="hero-copy">
-        <p class="hero-eyebrow">Software Engineer · Providence, RI</p>
-        <h1 class="hero-name">Eric Stermer.</h1>
+@* ── Hero ── *@
+<section class="hero" id="hero">
+    <div class="hero-content">
+        <p class="hero-eyebrow">Software Engineering &amp; IT Leadership</p>
+        <h1 class="hero-name">Eric Stermer</h1>
+        <p class="hero-title">Director of IT Operations</p>
         <p class="hero-tagline">
-            I build thoughtful, full-stack software — from React front-ends
-            to Rails and Node APIs, and now .NET 10 &amp; Blazor.
+            From writing my first line of code to leading engineering teams and
+            IT operations — I build systems, grow people, and ship what matters.
         </p>
         <div class="hero-actions">
-            <a class="btn btn-primary" href="/projects">View projects</a>
-            <a class="btn btn-ghost" href="/contact">Get in touch</a>
+            <a class="btn btn-primary" href="#work">See my work</a>
+            <a class="btn btn-ghost" href="#contact">Get in touch</a>
         </div>
     </div>
-    <div class="hero-avatar">
-        <img src="images/avatar.jpg" alt="Eric Stermer" width="180" height="180" />
+</section>
+
+@* ── About ── *@
+<section class="about" id="about">
+    <h2 class="section-title">About</h2>
+    <div class="about-grid">
+        <div class="about-text">
+            <p>
+                My journey into tech started with Khan Academy's Hour of Code —
+                a moment that sparked a passion I've been building on ever since.
+                I went through General Assembly's Web Development Immersive and
+                landed my first professional role as a developer at Datarista,
+                where I quickly grew from junior developer to full stack engineer.
+            </p>
+            <p>
+                Over the years I've progressed from writing code to leading
+                engineering teams to directing IT operations. I've architected
+                systems, mentored developers, managed cloud infrastructure, and
+                built the processes that keep teams shipping reliably.
+            </p>
+            <p>
+                Outside of work, I'm based in Providence, RI. I'm a former
+                competitive distance runner (with a few National Championships
+                to my name) and a dedicated foodie working my way through
+                Providence's restaurant scene.
+            </p>
+        </div>
+        <div class="about-photo">
+            <img src="images/avatar.jpg" alt="Eric Stermer" loading="lazy" />
+        </div>
     </div>
 </section>
 
-<section class="mission">
-    <h2 class="section-title">My Mission</h2>
-    <div class="mission-grid">
-        <article class="card mission-card">
-            <h3 class="mission-card-title">Mission</h3>
-            <p>
-                I strive to find solutions that drive incremental change in
-                simple everyday experiences.
-            </p>
-        </article>
-        <article class="card mission-card">
-            <h3 class="mission-card-title">My Coding Story</h3>
-            <p>
-                My interest in coding began when I watched <em>Coding Stars</em>
-                and completed <em>The Hour of Code</em> on Khan Academy. From
-                that moment I knew I had found my passion.
-            </p>
-        </article>
-        <article class="card mission-card">
-            <h3 class="mission-card-title">A Little More About Me</h3>
-            <p>
-                I grew up in Binghamton, NY playing every sport I could,
-                eventually finding my stride in distance running. I ran
-                competitively through college and won a few National
-                Championships. After college I lived in Lynchburg, VA, and now
-                call Providence, RI home — where I've become a bit of a foodie
-                working my way through the local food scene.
-            </p>
-        </article>
+@* ── Career Timeline ── *@
+<section class="experience" id="experience">
+    <h2 class="section-title">Experience</h2>
+    <div class="timeline">
+
+        <div class="timeline-entry">
+            <div class="timeline-dot"></div>
+            <div class="card timeline-card">
+                <h3 class="timeline-role">Director of IT Operations</h3>
+                <p class="timeline-meta">[Company Name] · 2023 – Present</p>
+                <ul class="timeline-bullets">
+                    <li>Leading IT operations and infrastructure strategy</li>
+                    <li>Managing engineering teams and cross-functional initiatives</li>
+                    <li>Driving operational excellence and system reliability</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="timeline-entry">
+            <div class="timeline-dot"></div>
+            <div class="card timeline-card">
+                <h3 class="timeline-role">Technical Lead</h3>
+                <p class="timeline-meta">[Company Name] · 2020 – 2023</p>
+                <ul class="timeline-bullets">
+                    <li>Led a team of engineers on full-stack product development</li>
+                    <li>Architected scalable systems and CI/CD pipelines</li>
+                    <li>Mentored junior and mid-level developers</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="timeline-entry">
+            <div class="timeline-dot"></div>
+            <div class="card timeline-card">
+                <h3 class="timeline-role">Software Developer</h3>
+                <p class="timeline-meta">Datarista Inc. · 2017 – 2020</p>
+                <ul class="timeline-bullets">
+                    <li>Full-stack development with React, Redux, and Java</li>
+                    <li>Promoted from Jr. Developer to Full Stack Engineer</li>
+                    <li>Built front-end components and contributed to backend APIs</li>
+                </ul>
+            </div>
+        </div>
+
     </div>
 </section>
 
-<section class="featured">
-    <div class="featured-header">
-        <h2 class="section-title">Featured Projects</h2>
-        <a class="featured-all" href="/projects">See all →</a>
+@* ── Competencies Grid ── *@
+<section class="competencies">
+    <h2 class="section-title">Skills &amp; Competencies</h2>
+    <div class="competencies-grid">
+        @foreach (var group in _skills)
+        {
+            <div class="card competency-card">
+                <h3 class="competency-title">@group.Category</h3>
+                <p class="competency-items">
+                    @string.Join(", ", group.Skills.Select(s => s.Name))
+                </p>
+            </div>
+        }
     </div>
-    <div class="featured-grid">
+</section>
+
+@* ── Selected Work ── *@
+<section class="work" id="work">
+    <h2 class="section-title">Selected Work</h2>
+    <div class="work-list">
         @foreach (var project in _projects)
         {
-            <article class="card project-card">
-                <a class="project-card-image" href="@project.Url" target="_blank" rel="noopener noreferrer">
-                    <img src="@project.ImageUrl" alt="@project.Title" loading="lazy" />
-                </a>
-                <div class="project-card-body">
-                    <h3 class="project-card-title">@project.Title</h3>
-                    <p class="project-card-desc">@project.Description</p>
-                </div>
+            <article class="card work-card">
+                <h3 class="work-title">@project.Title</h3>
+                <ul class="work-tags">
+                    @foreach (var tag in project.TagList)
+                    {
+                        <li class="work-tag">@tag</li>
+                    }
+                </ul>
+                <p class="work-desc">@project.Description</p>
+                @if (!string.IsNullOrEmpty(project.Url))
+                {
+                    <a class="work-link" href="@project.Url" target="_blank" rel="noopener noreferrer">
+                        View project →
+                    </a>
+                }
             </article>
         }
     </div>
 </section>
 
+@* ── Testimonials ── *@
+<section class="testimonials" id="testimonials">
+    <h2 class="section-title">What Others Say</h2>
+    <div class="testimonials-grid">
+        @foreach (var rec in _recommendations.Take(2))
+        {
+            <blockquote class="card testimonial-card">
+                <p class="testimonial-quote">"@rec.Content"</p>
+                <footer class="testimonial-author">
+                    @if (!string.IsNullOrEmpty(rec.LinkedInUrl))
+                    {
+                        <a class="testimonial-name" href="@rec.LinkedInUrl" target="_blank" rel="noopener noreferrer">@rec.AuthorName</a>
+                    }
+                    else
+                    {
+                        <span class="testimonial-name">@rec.AuthorName</span>
+                    }
+                    <span class="testimonial-title">@rec.AuthorTitle</span>
+                </footer>
+            </blockquote>
+        }
+    </div>
+</section>
+
+@* ── Contact ── *@
+<section class="contact" id="contact">
+    <h2 class="section-title">Get in Touch</h2>
+    <p class="contact-intro">Have a question or want to connect? Drop me a line.</p>
+    <div class="contact-form-wrap">
+        <EricstermerCom.Features.Contact.Components.ContactForm />
+    </div>
+    <div class="contact-social">
+        <span class="contact-social-label">or find me on</span>
+        <div class="social-icons">
+            <a href="https://twitter.com/RunninStermz" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M18.244 2H21.5l-7.5 8.57L23 22h-6.844l-5.36-7.01L4.6 22H1.34l8.02-9.17L1 2h7.02l4.84 6.4L18.244 2zm-1.2 18h1.86L7.04 4H5.06l11.984 16z"/>
+                </svg>
+            </a>
+            <a href="https://github.com/estermer" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.69-3.87-1.36-3.87-1.36-.52-1.34-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.74-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11.05 11.05 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.58.23 2.75.11 3.04.74.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.41-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.55C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/>
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/eric-stermer-37b74122/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M19 0H5C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5zM7.5 19h-3V9h3v10zM6 7.5C4.9 7.5 4 6.6 4 5.5S4.9 3.5 6 3.5 8 4.4 8 5.5 7.1 7.5 6 7.5zM20 19h-3v-5c0-1.2-.4-2-1.5-2-1.1 0-1.5.8-1.5 2v5h-3V9h3v1.4c.5-.8 1.5-1.6 3-1.6 2.2 0 3 1.4 3 4V19z"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
 @code {
     private IReadOnlyList<Models.Project> _projects = Array.Empty<Models.Project>();
+    private IReadOnlyList<SkillGroup> _skills = Array.Empty<SkillGroup>();
+    private IReadOnlyList<Models.Recommendation> _recommendations = Array.Empty<Models.Recommendation>();
 
     protected override async Task OnInitializedAsync()
-        => _projects = await GetFeaturedProjects.HandleAsync();
+    {
+        var projectsTask = GetFeaturedProjects.HandleAsync();
+        var skillsTask = GetSkills.HandleAsync();
+        var recsTask = GetRecommendations.HandleAsync();
+
+        await Task.WhenAll(projectsTask, skillsTask, recsTask);
+
+        _projects = await projectsTask;
+        _skills = await skillsTask;
+        _recommendations = await recsTask;
+    }
 }
