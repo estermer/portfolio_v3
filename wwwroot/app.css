@@ -6,6 +6,11 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 72px; /* nav-height (64px) + 8px breathing room */
+}
+
 html,
 body {
     margin: 0;
@@ -83,11 +88,11 @@ button {
 }
 
 .invalid {
-    outline: 1px solid #e50000;
+    outline: 1px solid var(--danger);
 }
 
 .validation-message {
-    color: #e50000;
+    color: var(--danger);
     font-size: 0.85rem;
     margin-top: 0.25rem;
 }
