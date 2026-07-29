@@ -393,6 +393,20 @@ a.testimonial-name:hover {
     margin: 0 0 2rem;
     color: var(--text-muted);
     font-size: 1rem;
+    max-width: 36rem;
+}
+
+.contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+}
+
+.contact-links .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .contact-form-wrap {
@@ -418,6 +432,11 @@ a.testimonial-name:hover {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+.social-icons-large {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
 }
 
 .social-icons a {
