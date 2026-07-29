@@ -126,10 +126,6 @@ app.MapGet("/sitemap.xml", (HttpContext ctx) =>
     var urls = new[]
     {
         ("/", "1.0", "weekly"),
-        ("/experience", "0.8", "monthly"),
-        ("/projects", "0.9", "weekly"),
-        ("/recommendations", "0.7", "monthly"),
-        ("/contact", "0.6", "monthly"),
     };
 
     var xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +

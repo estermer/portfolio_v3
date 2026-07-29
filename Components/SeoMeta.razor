@@ -5,7 +5,7 @@
         var baseUrl = (Config["Site:BaseUrl"] ?? "https://ericstermer.com").TrimEnd('/');
         var path = string.IsNullOrEmpty(Path) ? "/" : Path;
         var url = $"{baseUrl}{path}";
-        var imagePath = string.IsNullOrWhiteSpace(Image) ? "images/avatar.jpg" : Image.TrimStart('/');
+        var imagePath = string.IsNullOrWhiteSpace(Image) ? "images/avatar.png" : Image.TrimStart('/');
         var imageUrl = $"{baseUrl}/{imagePath}";
     }
 
