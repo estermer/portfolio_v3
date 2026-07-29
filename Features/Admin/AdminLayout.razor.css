@@ -35,7 +35,7 @@
     width: 28px;
     height: 28px;
     background: var(--text);
-    color: #ffffff;
+    color: var(--text-on-accent);
     border-radius: 6px;
     font-size: 0.8125rem;
     font-weight: 700;
@@ -228,24 +228,24 @@
 .admin-btn-primary {
     background: var(--accent);
     border-color: var(--accent);
-    color: #ffffff;
+    color: var(--text-on-accent);
 }
 
 .admin-btn-primary:hover {
     background: var(--accent-hover);
     border-color: var(--accent-hover);
-    color: #ffffff;
+    color: var(--text-on-accent);
 }
 
 .admin-btn-danger {
-    color: #b91c1c;
-    border-color: #fecaca;
+    color: var(--danger);
+    border-color: var(--danger-border);
 }
 
 .admin-btn-danger:hover {
-    background: #fef2f2;
-    border-color: #fca5a5;
-    color: #991b1b;
+    background: var(--danger-soft);
+    border-color: var(--danger);
+    color: var(--danger-hover);
 }
 
 .admin-form {

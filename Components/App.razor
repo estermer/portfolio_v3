@@ -1,16 +1,27 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
-    <meta name="theme-color" content="#fafaf9" />
+    <meta name="theme-color" content="#0f0f11" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <!-- Prevent flash of wrong theme -->
+    <script>
+        (function() {
+            var t = localStorage.getItem('theme');
+            if (!t) t = 'dark';
+            document.documentElement.setAttribute('data-theme', t);
+            var mc = t === 'dark' ? '#0f0f11' : '#fafaf9';
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', mc);
+        })();
+    </script>
 
     <!-- Site-wide defaults (per-page SEO is added by <SeoMeta/>) -->
     <meta property="og:site_name" content="Eric Stermer" />
@@ -28,6 +39,17 @@
 <body>
     <Routes />
     <script src="@Assets["_framework/blazor.web.js"]"></script>
+    <script>
+        function toggleTheme() {
+            var el = document.documentElement;
+            var current = el.getAttribute('data-theme') || 'dark';
+            var next = current === 'dark' ? 'light' : 'dark';
+            el.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            var mc = next === 'dark' ? '#0f0f11' : '#fafaf9';
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', mc);
+        }
+    </script>
 </body>
 
 </html>
