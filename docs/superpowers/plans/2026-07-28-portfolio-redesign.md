@@ -243,7 +243,7 @@ Replace the entire contents of `Features/Home/Home.razor` with:
             </p>
         </div>
         <div class="about-photo">
-            <img src="images/avatar.png" alt="Eric Stermer" loading="lazy" />
+            <img src="images/avatar.jpg" alt="Eric Stermer" loading="lazy" />
         </div>
     </div>
 </section>
