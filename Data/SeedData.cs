@@ -47,9 +47,33 @@ public static class SeedData
     {
         var projects = new List<Project>
         {
-            new() { Title = "Cloud Infrastructure Migration", Description = "Led the migration of on-premise infrastructure to AWS, reducing deployment time by 80% and cutting hosting costs by 40%. Designed the CI/CD pipeline architecture and managed the phased rollout across engineering teams.", TechTags = "AWS, Terraform, Docker, CI/CD, GitHub Actions", ImageUrl = "", Url = null, SortOrder = 10 },
-            new() { Title = "Internal Developer Platform", Description = "Architected and built internal tooling used by engineers daily for deployment automation, environment provisioning, and monitoring. Reduced onboarding time for new developers from days to hours.", TechTags = ".NET, React, Azure, DevOps, PostgreSQL", ImageUrl = "", Url = null, SortOrder = 20 },
-            new() { Title = "IT Operations Overhaul", Description = "Consolidated vendor relationships, implemented centralized monitoring, and established security compliance processes. Improved system uptime to 99.9% and reduced incident response time by 60%.", TechTags = "Infrastructure, Monitoring, Security, Vendor Management", ImageUrl = "", Url = null, SortOrder = 30 },
+            new()
+            {
+                Title = "IMS Infrastructure & Cost Migration",
+                Description = "Drove an infrastructure and reliability overhaul at IMS, including migrating workloads from cloud back to on-prem to optimize cost and regain operational control. Led a team of 4–6 spanning internal IT and platform/infra, owning vendor management and budget along the way.",
+                TechTags = "Cost optimization, Infrastructure, Team leadership, Vendor management",
+                ImageUrl = "",
+                Url = null,
+                SortOrder = 10,
+            },
+            new()
+            {
+                Title = "Conversational Banking Chatbot (Amazon Lex)",
+                Description = "Designed and shipped a multi-channel chatbot SaaS on Amazon Lex for mid-sized financial institutions — pre-LLM conversational AI for banking workflows like account inquiries, transfers, and customer onboarding.",
+                TechTags = "Amazon Lex, Conversational AI, AWS, Fintech",
+                ImageUrl = "",
+                Url = null,
+                SortOrder = 20,
+            },
+            new()
+            {
+                Title = "Customer Onboarding Platform",
+                Description = "Owned a customer-facing onboarding platform end-to-end at Digital Onboarding: React SPA on the front end, Elixir/Phoenix API on the back, with PostgreSQL and Redis under the hood. Drove the customer-driven UX iteration that defined the product.",
+                TechTags = "React, Elixir / Phoenix, PostgreSQL, Redis, Full-stack",
+                ImageUrl = "",
+                Url = null,
+                SortOrder = 30,
+            },
         };
 
         await db.Projects.AddRangeAsync(projects);
